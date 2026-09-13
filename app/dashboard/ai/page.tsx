@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { Bot, Sparkles, TrendingUp, Search, Send, Zap, BrainCircuit } from "lucide-react";
 
+import Link from "next/link";
+
 export default function AISuitePage() {
   const [nlQuery, setNlQuery] = useState("Show hot leads with deal value above $30,000");
   const [queryResult, setQueryResult] = useState<string | null>(null);
@@ -27,9 +29,18 @@ export default function AISuitePage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-white tracking-tight">AI Intelligence & Assistant Suite</h1>
-        <p className="text-sm text-gray-400">Natural language search, lead scoring algorithms, and weighted revenue forecasting.</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-white tracking-tight">AI Intelligence & Assistant Suite</h1>
+          <p className="text-sm text-gray-400">Natural language search, lead scoring algorithms, and weighted revenue forecasting.</p>
+        </div>
+        <Link
+          href="/dashboard/ai/scripts"
+          className="flex items-center space-x-1.5 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-lg transition-all"
+        >
+          <Sparkles className="w-4 h-4" />
+          <span>Objection Rebuttal Generator</span>
+        </Link>
       </div>
 
       {/* Natural Language CRM Search Playground */}

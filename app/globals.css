@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --background: #090d16;
+  --background: #080b11;
   --foreground: #f3f4f6;
-  --card: #111827;
-  --card-border: #1f2937;
+  --card: #0f172a;
+  --card-border: #1e293b;
   --primary: #3b82f6;
   --primary-hover: #2563eb;
   --accent: #8b5cf6;
   --muted: #9ca3af;
-  --border: #1f2937;
+  --border: #1e293b;
 }
 
 body {
@@ -25,37 +25,48 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #090d16;
+  background: #080b11;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1f2937;
+  background: #1e293b;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #374151;
+  background: #334155;
 }
 
-/* Glassmorphism Cards */
+/* Frosted Glassmorphism Cards */
 .glass-card {
-  background: rgba(17, 24, 39, 0.75);
-  backdrop-filter: blur(12px);
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
 }
 
 .glass-card-hover {
-  transition: all 0.2s ease-in-out;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .glass-card-hover:hover {
-  border-color: rgba(59, 130, 246, 0.3);
-  transform: translateY(-2px);
-  box-shadow: 0 12px 40px 0 rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px -15px rgba(59, 130, 246, 0.15);
 }
 
-/* Custom Glows */
+/* Ambient Glows */
 .blue-glow {
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.25);
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.2);
 }
 .purple-glow {
-  box-shadow: 0 0 20px rgba(139, 92, 246, 0.25);
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.2);
+}
+.amber-glow {
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.2);
+}
+.emerald-glow {
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.2);
+}
+
+/* Custom Sliders */
+input[type="range"] {
+  accent-color: #3b82f6;
 }
