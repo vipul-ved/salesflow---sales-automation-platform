@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SalesFlow AI - Production-Grade AI CRM & Sales Automation SaaS
 
-## Getting Started
+> **Manage relationships. Automate sales. Close smarter.**
 
-First, run the development server:
+**SalesFlow AI** is a commercial-grade AI-powered CRM & Sales Automation SaaS platform built with Next.js 14+ (App Router), TypeScript, Tailwind CSS, Prisma ORM, Supabase (PostgreSQL), and OpenAI API.
 
+---
+
+## 🌟 Key Features
+
+- **Multi-Tenant Workspace Scoping**: Complete data isolation per organization (`organizationId`).
+- **Role-Based Access Control (RBAC)**: Strict permission enforcement across `OWNER`, `ADMIN`, `MANAGER`, `SALES_AGENT`, and `VIEWER`.
+- **Drag-and-Drop Kanban Sales Pipeline**: Visual deal stages, real-time stage totals, weighted value calculations, and animated drag-and-drop state transitions (`@hello-pangea/dnd`).
+- **AI Sales Assistant & Tool Engine**: Server-side tool execution (`searchLeads`, `getPipeline`, `getSalesMetrics`, `getRevenueForecast`) allowing natural language queries without exposing sensitive database schemas.
+- **AI Lead Scoring**: Real-time 0-100 score engine (Hot 🔥, Warm ☀️, Cold ❄️) with explicit signal explanations.
+- **AI Email Generator**: Custom prompt composer supporting tone adjustments (*Professional*, *Friendly*, *Persuasive*, *Short*).
+- **Sales Automation Builder**: Trigger-condition-action workflow executor (`lead.created`, `lead.qualified`, `deal.won`, etc.).
+- **Executive Analytics & Reporting**: Interactive Recharts revenue trends, conversion funnel metrics, and rep performance leaderboards.
+- **Command Palette (`Ctrl + K`)**: Global modal search across CRM records and instant navigation.
+- **Developer Portal**: Secret API key generator (SHA-256 validation) & Webhook subscriber endpoint manager.
+- **SaaS Billing Architecture**: Plan limits (Free, Pro, Business) ready for Razorpay and Stripe cloud integration.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 14+ (App Router) & React 18
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS & Lucide Icons
+- **Database & ORM**: Prisma ORM with Supabase (PostgreSQL) / SQLite local fallback
+- **Authentication**: HTTP-only JWT Session Cookies with bcrypt password hashing
+- **Charts & Drag-and-Drop**: Recharts & `@hello-pangea/dnd`
+
+---
+
+## 🚀 Quick Start & Local Setup
+
+### 1. Install Dependencies
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Configure Environment Variables
+Copy `.env.example` to `.env`:
+```bash
+cp .env.example .env
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Database Initialization & Seed
+Push the Prisma schema and seed 50+ realistic CRM records:
+```bash
+npx prisma db push
+npx prisma db seed
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Run Development Server
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🔐 Seeded Demo Credentials
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Use these credentials to log in to the demo environment:
+- **Email**: `alex@acme.com`
+- **Password**: `password123`
+- **Role**: `OWNER` (Full access to all CRM, AI, Automation, Developer & Billing features)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🌐 Deploying to GitHub & Vercel (Production)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Push this codebase to a GitHub Repository.
+2. Connect your GitHub repository to **Vercel**.
+3. Set your **Supabase PostgreSQL** `DATABASE_URL` and `DIRECT_URL` in Vercel Environment Variables.
+4. Set `JWT_SECRET` and `OPENAI_API_KEY` in Vercel settings.
+5. Vercel automatically builds and deploys your live production SaaS on your custom domain!
