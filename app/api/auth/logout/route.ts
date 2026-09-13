@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+
+export const dynamic = "force-dynamic";
 import { clearSessionCookie, getCurrentUser } from "@/lib/auth";
 
 export async function POST() {

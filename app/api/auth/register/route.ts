@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+
+export const dynamic = "force-dynamic";
 import { hashPassword, setSessionCookie } from "@/lib/auth";
 import { logAudit } from "@/lib/audit";
 

@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+
+export const dynamic = "force-dynamic";
 import { getCurrentUser } from "@/lib/auth";
 import { triggerWorkflows } from "@/lib/automation";
 import { logAudit } from "@/lib/audit";

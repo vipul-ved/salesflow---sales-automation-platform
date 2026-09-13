@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
+
+export const dynamic = "force-dynamic";
 import { generateAIEmail } from "@/lib/ai";
 
 export async function POST(req: Request) {
