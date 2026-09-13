@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd";
-import { Plus, DollarSign, Building2, User, Sparkles, AlertCircle } from "lucide-react";
+import { Plus, DollarSign, Building2, User, Sparkles, AlertCircle, Kanban } from "lucide-react";
 
 interface Stage {
   id: string;
@@ -103,42 +103,45 @@ export default function DealsPage() {
     );
   }
 
+  const STAGE_ACCENTS = ["border-t-blue-500", "border-t-purple-500", "border-t-amber-500", "border-t-indigo-500", "border-t-pink-500", "border-t-green-500", "border-t-red-500"];
+
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">Kanban Sales Pipeline</h1>
-          <p className="text-sm text-gray-400">Drag and drop deals across stages to update status and trigger workflows.</p>
+          <h1 className="text-2xl font-extrabold text-white tracking-tight">Kanban Sales Pipeline</h1>
+          <p className="text-xs text-gray-400">Drag and drop deals across stages to update status and trigger workflows.</p>
         </div>
         <button
           onClick={() => setShowModal(true)}
-          className="flex items-center space-x-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-lg transition-all"
+          className="flex items-center space-x-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-lg transition-all blue-glow"
         >
           <Plus className="w-4 h-4" />
-          <span>Add New Deal</span>
+          <span>Add Deal</span>
         </button>
       </div>
 
       {/* Drag Drop Kanban Board */}
       <DragDropContext onDragEnd={handleDragEnd}>
         <div className="flex space-x-4 overflow-x-auto pb-6">
-          {stages.map((stage) => {
+          {stages.map((stage, sIdx) => {
             const stageDeals = deals.filter((d) => d.stageId === stage.id);
             const stageTotal = stageDeals.reduce((sum, d) => sum + d.amount, 0);
+            const accentClass = STAGE_ACCENTS[sIdx % STAGE_ACCENTS.length];
 
             return (
-              <div key={stage.id} className="w-80 shrink-0 flex flex-col glass-card rounded-2xl p-4 border border-gray-800">
+              <div key={stage.id} className={`w-80 shrink-0 flex flex-col glass-card rounded-3xl p-4 border border-white/[0.08] border-t-4 ${accentClass}`}>
                 {/* Stage Header */}
-                <div className="flex items-center justify-between mb-3 border-b border-gray-800/80 pb-3">
+                <div className="flex items-center justify-between mb-3 border-b border-white/[0.06] pb-3">
                   <div>
-                    <h3 className="font-semibold text-white text-sm">{stage.name}</h3>
-                    <span className="text-[11px] text-gray-400 font-medium">
+                    <h3 className="font-bold text-white text-xs uppercase tracking-wider">{stage.name}</h3>
+                    <span className="text-[11px] text-gray-400 font-semibold">
                       {stageDeals.length} deals • ${stageTotal.toLocaleString()}
                     </span>
                   </div>
                   <span className="text-[10px] font-bold text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/20">
-                    {stage.probability}% prob
+                    {stage.probability}%
                   </span>
                 </div>
 
@@ -148,7 +151,7 @@ export default function DealsPage() {
                     <div
                       ref={provided.innerRef}
                       {...provided.droppableProps}
-                      className={`flex-1 min-h-[400px] space-y-3 transition-colors rounded-xl p-1 ${
+                      className={`flex-1 min-h-[420px] space-y-3 transition-colors rounded-2xl p-1 ${
                         snapshot.isDraggingOver ? "bg-blue-600/10 border border-dashed border-blue-500/40" : ""
                       }`}
                     >
@@ -159,25 +162,25 @@ export default function DealsPage() {
                               ref={provided.innerRef}
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
-                              className={`bg-gray-900 border border-gray-800 rounded-xl p-4 space-y-3 cursor-grab hover:border-blue-500/40 transition-all ${
-                                snapshot.isDragging ? "shadow-2xl border-blue-500 ring-2 ring-blue-500/20 scale-105" : ""
+                              className={`bg-gray-900/90 border border-white/[0.08] rounded-2xl p-4 space-y-3 cursor-grab hover:border-blue-500/40 transition-all ${
+                                snapshot.isDragging ? "shadow-2xl border-blue-500 ring-2 ring-blue-500/30 scale-105 z-30" : ""
                               }`}
                             >
                               <div className="flex items-start justify-between">
-                                <h4 className="font-semibold text-white text-xs leading-snug">{deal.name}</h4>
+                                <h4 className="font-bold text-white text-xs leading-snug">{deal.name}</h4>
                               </div>
 
-                              <div className="text-base font-bold text-green-400">
+                              <div className="text-base font-extrabold text-green-400">
                                 ${deal.amount.toLocaleString()}
                               </div>
 
-                              <div className="flex items-center justify-between text-[11px] text-gray-400 border-t border-gray-800/60 pt-2">
+                              <div className="flex items-center justify-between text-[11px] text-gray-400 border-t border-white/[0.06] pt-2">
                                 <div className="flex items-center space-x-1">
                                   <Building2 className="w-3 h-3 text-gray-500" />
-                                  <span>{deal.company?.name || "Acme Client"}</span>
+                                  <span className="text-gray-300 font-medium">{deal.company?.name || "Acme Client"}</span>
                                 </div>
-                                <span className="text-[10px] text-purple-400 bg-purple-500/10 px-1.5 py-0.5 rounded">
-                                  AI Score: 85 🔥
+                                <span className="text-[10px] font-bold text-purple-400 bg-purple-500/10 px-1.5 py-0.5 rounded border border-purple-500/20">
+                                  Hot 🔥
                                 </span>
                               </div>
                             </div>
@@ -196,9 +199,9 @@ export default function DealsPage() {
 
       {/* Add Deal Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-          <div className="w-full max-w-md bg-gray-900 border border-gray-800 rounded-2xl p-6 shadow-2xl space-y-4">
-            <h2 className="text-lg font-bold text-white">Create New Deal</h2>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4">
+          <div className="w-full max-w-md bg-gray-900 border border-white/[0.08] rounded-3xl p-6 shadow-2xl space-y-4">
+            <h2 className="text-lg font-extrabold text-white">Create New Deal</h2>
             <form onSubmit={handleCreateDeal} className="space-y-4">
               <div>
                 <label className="text-xs text-gray-400 block mb-1">Deal Title *</label>
@@ -208,7 +211,7 @@ export default function DealsPage() {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="e.g. Acme Enterprise SaaS Upgrade"
-                  className="w-full bg-gray-950 border border-gray-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500"
+                  className="w-full bg-gray-950 border border-white/[0.08] rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500"
                 />
               </div>
 
@@ -220,7 +223,7 @@ export default function DealsPage() {
                     required
                     value={formData.amount}
                     onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
-                    className="w-full bg-gray-950 border border-gray-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500"
+                    className="w-full bg-gray-950 border border-white/[0.08] rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500"
                   />
                 </div>
                 <div>
@@ -228,7 +231,7 @@ export default function DealsPage() {
                   <select
                     value={formData.stageId}
                     onChange={(e) => setFormData({ ...formData, stageId: e.target.value })}
-                    className="w-full bg-gray-950 border border-gray-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500"
+                    className="w-full bg-gray-950 border border-white/[0.08] rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500"
                   >
                     {stages.map((st) => (
                       <option key={st.id} value={st.id}>
@@ -239,7 +242,7 @@ export default function DealsPage() {
                 </div>
               </div>
 
-              <div className="flex justify-end space-x-3 pt-4 border-t border-gray-800">
+              <div className="flex justify-end space-x-3 pt-4 border-t border-white/[0.06]">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
